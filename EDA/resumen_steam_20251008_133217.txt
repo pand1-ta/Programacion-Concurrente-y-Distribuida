@@ -1,0 +1,22 @@
+📄 RESUMEN DEL ANÁLISIS DE STEAM REVIEWS
+
+Total de usuarios procesados: 21747371
+
+Recomendaciones:
+- Recomiendan: 19022610 (87.47%)
+- No recomiendan: 2724761 (12.53%)
+
+Promedio de reseñas por usuario: 404477.48
+Promedio de tiempo jugado: 16091.05 minutos
+
+Promedio de tiempo jugado según recomendación:
+- Recomiendan: 15555.81 minutos
+- No recomiendan: 19827.78 minutos
+
+Distribución por rangos de tiempo jugado:
+- 101-500 minutos: 1924874 usuarios
+- 501-1000 minutos: 2079127 usuarios
+- 1001+ minutos: 17146348 usuarios
+- 0-100 minutos: 597022 usuarios
+
+Usuarios que jugaron más de 1000 min y no recomiendan: 1948069
