@@ -1,0 +1,28 @@
+Numero de reseñas cargadas: 2000000
+Usuarios en la matriz: 29043 | Juegos en la matriz: 9
+Usuario seleccionado: 76561198059107008 | Juegos jugados: 3 | Rating promedio: 8.00
+
+--- Top 5 Juegos del Usuario ---
+  1. Half-Life (Rating: 8.27)
+  2. Counter-Strike: Source (Rating: 8.01)
+  3. Portal 2 (Rating: 7.72)
+
+--- Recomendaciones Generadas ---
+1. Garry's Mod (Score Predicho: 8.71 | Basado en 22 vecinos)
+2. The Witcher 3: Wild Hunt (Score Predicho: 7.92 | Basado en 2 vecinos)
+3. Half-Life 2: Episode Two (Score Predicho: 7.57 | Basado en 14 vecinos)
+4. Dead by Daylight (Score Predicho: 7.16 | Basado en 4 vecinos)
+5. Sid Meier's Civilization V (Score Predicho: 7.04 | Basado en 3 vecinos)
+
+--- Top 5 Usuarios Similares ---
+1. Usuario: 76561198352518080 (Similitud: 0.48) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2
+2. Usuario: 76561198084875392 (Similitud: 0.48) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2
+3. Usuario: 76561197965047056 (Similitud: 0.48) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2
+4. Usuario: 76561198040210688 (Similitud: 0.47) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2
+5. Usuario: 76561198804761632 (Similitud: 0.47) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2
+
+--- Rendimiento ---
+Tiempo de ejecucion secuencial (base): 13.0211ms
+Tiempo concurrente (2 goroutines): 10.0218ms (Speedup: 1.30x)
+Tiempo concurrente (4 goroutines): 9.1248ms (Speedup: 1.43x)
+Tiempo concurrente (8 goroutines): 10.0482ms (Speedup: 1.30x)
