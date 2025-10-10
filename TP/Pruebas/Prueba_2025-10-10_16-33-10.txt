@@ -1,0 +1,40 @@
+Numero de reseñas cargadas: 21721689
+Usuarios en la matriz: 2239746 | Juegos en la matriz: 315
+Usuario seleccionado: 76561198059107008 | Juegos jugados: 8 | Rating promedio: 6.94
+
+--- Top 5 Juegos del Usuario ---
+  1. The Forest (Rating: 9.27)
+  2. Half-Life (Rating: 8.27)
+  3. Counter-Strike: Source (Rating: 8.01)
+  4. Portal 2 (Rating: 7.72)
+  5. Sniper Elite 4 (Rating: 7.53)
+
+--- Recomendaciones Generadas ---
+1. Total War: WARHAMMER (Score Predicho: 9.49 | Basado en 2 vecinos)
+2. RimWorld (Score Predicho: 9.46 | Basado en 3 vecinos)
+3. Assassin's Creed Odyssey (Score Predicho: 9.45 | Basado en 3 vecinos)
+4. Garry's Mod (Score Predicho: 9.21 | Basado en 39 vecinos)
+5. The Elder Scrolls V: Skyrim (Score Predicho: 9.17 | Basado en 15 vecinos)
+6. Divinity: Original Sin 2 (Score Predicho: 9.08 | Basado en 3 vecinos)
+7. Total War: THREE KINGDOMS (Score Predicho: 8.98 | Basado en 2 vecinos)
+8. DARK SOULS™ III (Score Predicho: 8.98 | Basado en 12 vecinos)
+9. Artifact (Score Predicho: 8.92 | Basado en 2 vecinos)
+10. Assassin's Creed Origins (Score Predicho: 8.87 | Basado en 3 vecinos)
+11. DARK SOULS™: REMASTERED (Score Predicho: 8.84 | Basado en 2 vecinos)
+12. The Binding of Isaac: Rebirth (Score Predicho: 8.79 | Basado en 12 vecinos)
+13. Cities: Skylines (Score Predicho: 8.73 | Basado en 4 vecinos)
+14. Sid Meier's Civilization V (Score Predicho: 8.66 | Basado en 10 vecinos)
+15. Grand Theft Auto V (Score Predicho: 8.44 | Basado en 32 vecinos)
+
+--- Top 5 Usuarios Similares ---
+1. Usuario: 76561198003577088 (Similitud: 0.75) | Juegos en común: Sniper Elite 4, Half-Life, Counter-Strike: Source, Portal 2, Cube World, DOOM
+2. Usuario: 76561198108483440 (Similitud: 0.70) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2, The Forest, Cube World, Hotline Miami
+3. Usuario: 76561198361383312 (Similitud: 0.68) | Juegos en común: The Forest, Hotline Miami, DOOM, Sniper Elite 4, Half-Life, Counter-Strike: Source
+4. Usuario: 76561198144143600 (Similitud: 0.68) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2, The Forest, Hotline Miami, DOOM
+5. Usuario: 76561198159420240 (Similitud: 0.67) | Juegos en común: Counter-Strike: Source, Portal 2, Cube World, Hotline Miami, DOOM
+
+--- Rendimiento ---
+Tiempo de ejecucion secuencial (base): 1.3410848s
+Tiempo concurrente (2 goroutines): 910.9447ms (Speedup: 1.47x)
+Tiempo concurrente (4 goroutines): 746.7955ms (Speedup: 1.80x)
+Tiempo concurrente (8 goroutines): 813.9595ms (Speedup: 1.65x)

@@ -1,0 +1,25 @@
+Numero de reseñas cargadas: 1000000
+Usuarios en la matriz: 8518 | Juegos en la matriz: 7
+Usuario seleccionado: 76561198059107008 | Juegos jugados: 3 | Rating promedio: 8.00
+
+--- Top 5 Juegos del Usuario ---
+  1. Half-Life (Rating: 8.27)
+  2. Counter-Strike: Source (Rating: 8.01)
+  3. Portal 2 (Rating: 7.72)
+
+--- Recomendaciones Generadas ---
+1. The Witcher 3: Wild Hunt (Score Predicho: 8.13 | Basado en 3 vecinos)
+2. Half-Life 2: Episode Two (Score Predicho: 7.83 | Basado en 9 vecinos)
+
+--- Top 5 Usuarios Similares ---
+1. Usuario: 76561198063069232 (Similitud: 0.48) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2
+2. Usuario: 76561198352518080 (Similitud: 0.48) | Juegos en común: Portal 2, Half-Life, Counter-Strike: Source
+3. Usuario: 76561198084875392 (Similitud: 0.48) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2
+4. Usuario: 76561198129191296 (Similitud: 0.48) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2
+5. Usuario: 76561197965047056 (Similitud: 0.48) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2
+
+--- Rendimiento ---
+Tiempo de ejecucion secuencial (base): 3.5302ms
+Tiempo concurrente (2 goroutines): 2.9903ms (Speedup: 1.18x)
+Tiempo concurrente (4 goroutines): 2.5281ms (Speedup: 1.40x)
+Tiempo concurrente (8 goroutines): 3.0012ms (Speedup: 1.18x)

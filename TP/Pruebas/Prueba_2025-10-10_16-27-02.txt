@@ -1,0 +1,40 @@
+Numero de reseñas cargadas: 5000000
+Usuarios en la matriz: 224997 | Juegos en la matriz: 75
+Usuario seleccionado: 76561198059107008 | Juegos jugados: 5 | Rating promedio: 6.88
+
+--- Top 5 Juegos del Usuario ---
+  1. The Forest (Rating: 9.27)
+  2. Half-Life (Rating: 8.27)
+  3. Counter-Strike: Source (Rating: 8.01)
+  4. Portal 2 (Rating: 7.72)
+  5. Cube World (Rating: 1.13)
+
+--- Recomendaciones Generadas ---
+1. The Binding of Isaac: Rebirth (Score Predicho: 9.22 | Basado en 5 vecinos)
+2. Garry's Mod (Score Predicho: 8.76 | Basado en 40 vecinos)
+3. Enter the Gungeon (Score Predicho: 8.55 | Basado en 4 vecinos)
+4. Sid Meier's Civilization V (Score Predicho: 8.42 | Basado en 8 vecinos)
+5. PC Building Simulator (Score Predicho: 8.22 | Basado en 3 vecinos)
+6. Factorio (Score Predicho: 7.88 | Basado en 4 vecinos)
+7. Subnautica (Score Predicho: 7.88 | Basado en 10 vecinos)
+8. Nether (Score Predicho: 7.87 | Basado en 2 vecinos)
+9. Salt and Sanctuary (Score Predicho: 7.78 | Basado en 2 vecinos)
+10. The Witcher 3: Wild Hunt (Score Predicho: 7.67 | Basado en 13 vecinos)
+11. Half-Life 2: Episode Two (Score Predicho: 7.51 | Basado en 23 vecinos)
+12. Euro Truck Simulator 2 (Score Predicho: 7.33 | Basado en 13 vecinos)
+13. Human: Fall Flat (Score Predicho: 7.31 | Basado en 15 vecinos)
+14. Wallpaper Engine (Score Predicho: 6.99 | Basado en 9 vecinos)
+15. Celeste (Score Predicho: 6.76 | Basado en 2 vecinos)
+
+--- Top 5 Usuarios Similares ---
+1. Usuario: 76561198108483440 (Similitud: 0.63) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2, The Forest, Cube World
+2. Usuario: 76561198342592400 (Similitud: 0.59) | Juegos en común: Portal 2, The Forest, Half-Life, Counter-Strike: Source
+3. Usuario: 76561198003577088 (Similitud: 0.59) | Juegos en común: Counter-Strike: Source, Portal 2, Cube World, Half-Life
+4. Usuario: 76561198041658784 (Similitud: 0.59) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2, Cube World
+5. Usuario: 76561198054323904 (Similitud: 0.59) | Juegos en común: Counter-Strike: Source, Portal 2, The Forest, Cube World
+
+--- Rendimiento ---
+Tiempo de ejecucion secuencial (base): 103.9021ms
+Tiempo concurrente (2 goroutines): 87.0648ms (Speedup: 1.19x)
+Tiempo concurrente (4 goroutines): 77.232ms (Speedup: 1.35x)
+Tiempo concurrente (8 goroutines): 73.9905ms (Speedup: 1.40x)

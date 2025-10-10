@@ -1,0 +1,40 @@
+Numero de reseñas cargadas: 15000000
+Usuarios en la matriz: 1344397 | Juegos en la matriz: 177
+Usuario seleccionado: 76561198059107008 | Juegos jugados: 7 | Rating promedio: 6.85
+
+--- Top 5 Juegos del Usuario ---
+  1. The Forest (Rating: 9.27)
+  2. Half-Life (Rating: 8.27)
+  3. Counter-Strike: Source (Rating: 8.01)
+  4. Portal 2 (Rating: 7.72)
+  5. DOOM (Rating: 7.19)
+
+--- Recomendaciones Generadas ---
+1. RimWorld (Score Predicho: 9.70 | Basado en 2 vecinos)
+2. The Elder Scrolls V: Skyrim (Score Predicho: 9.39 | Basado en 13 vecinos)
+3. Garry's Mod (Score Predicho: 9.26 | Basado en 33 vecinos)
+4. Assassin's Creed Odyssey (Score Predicho: 9.05 | Basado en 2 vecinos)
+5. Divinity: Original Sin 2 (Score Predicho: 8.94 | Basado en 2 vecinos)
+6. The Binding of Isaac: Rebirth (Score Predicho: 8.93 | Basado en 10 vecinos)
+7. Mount & Blade: Warband (Score Predicho: 8.88 | Basado en 9 vecinos)
+8. Dead Cells (Score Predicho: 8.77 | Basado en 3 vecinos)
+9. American Truck Simulator (Score Predicho: 8.67 | Basado en 3 vecinos)
+10. Sid Meier's Civilization V (Score Predicho: 8.66 | Basado en 8 vecinos)
+11. The Walking Dead (Score Predicho: 8.40 | Basado en 4 vecinos)
+12. PC Building Simulator (Score Predicho: 8.38 | Basado en 3 vecinos)
+13. Satisfactory (Score Predicho: 8.27 | Basado en 3 vecinos)
+14. Cuphead (Score Predicho: 8.27 | Basado en 2 vecinos)
+15. Dying Light (Score Predicho: 8.27 | Basado en 13 vecinos)
+
+--- Top 5 Usuarios Similares ---
+1. Usuario: 76561198108483440 (Similitud: 0.70) | Juegos en común: Counter-Strike: Source, Portal 2, The Forest, Cube World, Hotline Miami, Half-Life
+2. Usuario: 76561198144143600 (Similitud: 0.69) | Juegos en común: Portal 2, The Forest, Hotline Miami, DOOM, Half-Life, Counter-Strike: Source
+3. Usuario: 76561198003577088 (Similitud: 0.68) | Juegos en común: Half-Life, Counter-Strike: Source, Portal 2, Cube World, DOOM
+4. Usuario: 76561198159420240 (Similitud: 0.67) | Juegos en común: Counter-Strike: Source, Portal 2, Cube World, Hotline Miami, DOOM
+5. Usuario: 76561198054323904 (Similitud: 0.67) | Juegos en común: DOOM, Counter-Strike: Source, Portal 2, The Forest, Cube World
+
+--- Rendimiento ---
+Tiempo de ejecucion secuencial (base): 710.9246ms
+Tiempo concurrente (2 goroutines): 463.2326ms (Speedup: 1.53x)
+Tiempo concurrente (4 goroutines): 395.1789ms (Speedup: 1.80x)
+Tiempo concurrente (8 goroutines): 445.7791ms (Speedup: 1.59x)
