@@ -8,6 +8,11 @@ import (
 	"strconv"
 )
 
+// Constante para manejar la cantidad máxima de registros a procesar del archivo CSV (opcional)
+// Si se pone en -1, se procesan todos los registros
+const MaxRecords = 100
+
+// Definimos la estructura para almacenar los ratings
 type Rating struct {
 	UserID  int
 	MovieID int
@@ -40,6 +45,11 @@ func preprocesamiento(path string) []Rating {
 		if err != nil {
 			break
 		}
+
+		if MaxRecords != -1 && total >= MaxRecords {
+			break
+		}
+
 		total++
 
 		// Verificamos la longitud del registro y la presencia de valores vacíos
