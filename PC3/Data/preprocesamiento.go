@@ -8,6 +8,11 @@ import (
 	"strconv"
 )
 
+// Constante para manejar la cantidad máxima de registros a procesar del archivo CSV (opcional)
+// Si se pone en -1, se procesan todos los registros
+const MaxRecords = 100
+
+// Definimos la estructura para almacenar los ratings
 type Rating struct {
 	UserID  int
 	MovieID int
@@ -40,6 +45,11 @@ func preprocesamiento(path string) []Rating {
 		if err != nil {
 			break
 		}
+
+		if MaxRecords != -1 && total >= MaxRecords {
+			break
+		}
+
 		total++
 
 		// Verificamos la longitud del registro y la presencia de valores vacíos
@@ -144,64 +154,64 @@ func generarMatriz(data []Rating) ([][]float32, []int, []int) {
 }
 
 func guardarMatrizCSV(matriz [][]float32, users []int, movies []int, outputPath string) {
-    file, err := os.Create(outputPath)
-    if err != nil {
-        log.Fatalf("Error al crear archivo CSV: %v", err)
-    }
-    defer file.Close()
+	file, err := os.Create(outputPath)
+	if err != nil {
+		log.Fatalf("Error al crear archivo CSV: %v", err)
+	}
+	defer file.Close()
 
-    writer := csv.NewWriter(file)
+	writer := csv.NewWriter(file)
 
-    // Encabezado: columnas por índices de películas
-    header := []string{"userIndex"}
-    for j := range movies {
-        header = append(header, strconv.Itoa(j))
-    }
-    writer.Write(header)
+	// Encabezado: columnas por índices de películas
+	header := []string{"userIndex"}
+	for j := range movies {
+		header = append(header, strconv.Itoa(j))
+	}
+	writer.Write(header)
 
-    // Filas: índice de usuario + ratings
-    for i := range users {
-        row := []string{strconv.Itoa(i)}
-        for _, rating := range matriz[i] {
-            row = append(row, fmt.Sprintf("%.3f", rating))
-        }
-        writer.Write(row)
-    }
+	// Filas: índice de usuario + ratings
+	for i := range users {
+		row := []string{strconv.Itoa(i)}
+		for _, rating := range matriz[i] {
+			row = append(row, fmt.Sprintf("%.3f", rating))
+		}
+		writer.Write(row)
+	}
 
-    writer.Flush()
-    fmt.Printf("Archivo matriz guardado: %s\n", outputPath)
+	writer.Flush()
+	fmt.Printf("Archivo matriz guardado: %s\n", outputPath)
 }
 
 func guardarMapeos(users []int, movies []int) {
-    // Mapeo de usuarios
-    uFile, err := os.Create("usuarios_mapping.csv")
-    if err != nil {
-        log.Fatalf("Error al crear usuarios_mapping.csv: %v", err)
-    }
-    defer uFile.Close()
+	// Mapeo de usuarios
+	uFile, err := os.Create("usuarios_mapping.csv")
+	if err != nil {
+		log.Fatalf("Error al crear usuarios_mapping.csv: %v", err)
+	}
+	defer uFile.Close()
 
-    uWriter := csv.NewWriter(uFile)
-    uWriter.Write([]string{"userIndex", "userId"})
-    for i, u := range users {
-        uWriter.Write([]string{strconv.Itoa(i), strconv.Itoa(u)})
-    }
-    uWriter.Flush()
+	uWriter := csv.NewWriter(uFile)
+	uWriter.Write([]string{"userIndex", "userId"})
+	for i, u := range users {
+		uWriter.Write([]string{strconv.Itoa(i), strconv.Itoa(u)})
+	}
+	uWriter.Flush()
 
-    // Mapeo de películas
-    mFile, err := os.Create("peliculas_mapping.csv")
-    if err != nil {
-        log.Fatalf("Error al crear peliculas_mapping.csv: %v", err)
-    }
-    defer mFile.Close()
+	// Mapeo de películas
+	mFile, err := os.Create("peliculas_mapping.csv")
+	if err != nil {
+		log.Fatalf("Error al crear peliculas_mapping.csv: %v", err)
+	}
+	defer mFile.Close()
 
-    mWriter := csv.NewWriter(mFile)
-    mWriter.Write([]string{"movieIndex", "movieId"})
-    for j, m := range movies {
-        mWriter.Write([]string{strconv.Itoa(j), strconv.Itoa(m)})
-    }
-    mWriter.Flush()
+	mWriter := csv.NewWriter(mFile)
+	mWriter.Write([]string{"movieIndex", "movieId"})
+	for j, m := range movies {
+		mWriter.Write([]string{strconv.Itoa(j), strconv.Itoa(m)})
+	}
+	mWriter.Flush()
 
-    fmt.Println("Mapeos guardados: usuarios_mapping.csv y peliculas_mapping.csv")
+	fmt.Println("Mapeos guardados: usuarios_mapping.csv y peliculas_mapping.csv")
 }
 
 func main() {
