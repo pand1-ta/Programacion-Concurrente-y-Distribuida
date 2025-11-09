@@ -1,0 +1,5 @@
+1. Leer la matriz desde matriz_usuarios_peliculas.csv.
+2. Dividirla en submatrices (por filas o columnas, según qué quieras paralelizar).
+3. Procesar cada submatriz con goroutines.
+4. Coordinar el flujo con channels (para enviar resultados parciales y sincronizar).
+5. Medir speedup y scalability comparando ejecución secuencial vs concurrente.

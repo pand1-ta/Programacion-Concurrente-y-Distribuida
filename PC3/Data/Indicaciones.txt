@@ -1,0 +1,7 @@
+En esta carpeta, se incluye el archivo con el código en el lenguaje de programación "Go" para las tareas de
+pre-procesamiento del archivo "ratings.csv", el cual contiene los datos del dataset "MovieLens" necesarios
+para poder ser utilizados en el modelo a realizar de filtrado colaborativo.
+
+El Dataset elegido para el proyecto es el de "MovieLens 20M", pero para su prueba de funcionamiento y su subida
+al repositorio online GitHub, se usaron los datos de su versión pequeña (Small) del dataset recomendado para
+educación y desarrollo.
