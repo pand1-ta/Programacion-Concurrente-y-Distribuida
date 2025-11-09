@@ -24,7 +24,7 @@ const (
 	NumRecommendations  = 15
 	CsvFilePath         = "steam_reviews.csv"
 	ConfidenceThreshold = 10
-	MaxReviewsToLoad    = 0 // 0 para cargar todas las reseñas
+	MaxReviewsToLoad    = 5000000 // 0 para cargar todas las reseñas
 	TargetUserID        = 76561198059107008
 )
 
