@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: sdr_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - sdr-net
+
+  redis:
+    image: redis:7
+    container_name: sdr_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - sdr-net
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: sdr_api
+    env_file:
+      - .env
+    volumes:
+      - ./api/dataset:/app/dataset
+    ports:
+      - "${API_PORT}:8080"
+    depends_on:
+      - mongodb
+      - redis
+      - coordinator
+    networks:
+      - sdr-net
+
+  coordinator:
+    build:
+      context: ./cluster/coordinator
+      dockerfile: Dockerfile
+    container_name: sdr_coordinator
+    env_file:
+      - .env
+    ports:
+      - "${COORDINATOR_PORT}:8081"
+    depends_on:
+      - mongodb
+    networks:
+      - sdr-net
+
+volumes:
+  mongo_data:
+
+networks:
+  sdr-net:
+    driver: bridge
