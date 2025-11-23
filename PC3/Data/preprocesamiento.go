@@ -10,7 +10,7 @@ import (
 
 // Constante para manejar la cantidad máxima de registros a procesar del archivo CSV (opcional)
 // Si se pone en -1, se procesan todos los registros
-const MaxRecords = 100
+const MaxRecords = 1000000
 
 // Definimos la estructura para almacenar los ratings
 type Rating struct {
@@ -216,7 +216,7 @@ func guardarMapeos(users []int, movies []int) {
 
 func main() {
 	// Función de preprocesamiento
-	cleanData := preprocesamiento("ratings.csv")
+	cleanData := preprocesamiento("ratings_big.csv")
 
 	fmt.Printf("Se obtuvieron %d registros limpios.\n", len(cleanData))
 
