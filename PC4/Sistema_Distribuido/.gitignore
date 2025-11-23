@@ -1,0 +1,19 @@
+# Archivos y carpetas que no deben subirse al repo
+
+# Variables de entorno
+.env
+
+# Datasets y CSV
+*.csv
+api/dataset/
+cluster/dataset/
+
+# Archivos de build
+bin/
+vendor/
+*.exe
+
+# Configuración local
+.vscode/
+.idea/
+.DS_Store
