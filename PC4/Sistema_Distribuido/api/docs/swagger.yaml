@@ -1,0 +1,62 @@
+basePath: /
+definitions:
+  models.Movie:
+    properties:
+      movieId:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: Equipo SDR
+  description: API para generar recomendaciones personalizadas utilizando un clúster
+    distribuido de Workers.
+  title: Sistema Distribuido de Recomendaciones
+  version: "1.0"
+paths:
+  /health:
+    get:
+      description: Devuelve 'ok' si el servicio está activo
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Verifica el estado del servicio
+      tags:
+      - Salud
+  /recommend/{userId}:
+    get:
+      description: Retorna una lista de películas recomendadas para el usuario especificado
+      parameters:
+      - description: ID del usuario
+        in: path
+        name: userId
+        required: true
+        type: integer
+      - default: 10
+        description: Número de recomendaciones
+        in: query
+        name: k
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Movie'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Usuario no encontrado
+          schema:
+            type: string
+      summary: Genera recomendaciones para un usuario
+      tags:
+      - Recomendaciones
+swagger: "2.0"

@@ -1,0 +1,134 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: sdr_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - sdr-net
+
+  redis:
+    image: redis:7
+    container_name: sdr_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - sdr-net
+
+  api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    container_name: sdr_api
+    env_file:
+      - .env
+    volumes:
+      - ./api/dataset:/app/dataset
+    ports:
+      - "${API_PORT}:8080"
+    depends_on:
+      - mongodb
+      - redis
+      - coordinator
+    networks:
+      - sdr-net
+
+  coordinator:
+    build:
+      context: .
+      dockerfile: ./cluster/coordinator/Dockerfile
+    container_name: sdr_coordinator
+    env_file:
+      - .env
+    ports:
+      - "${COORDINATOR_PORT}:8081"
+    depends_on:
+      - mongodb
+      - worker1
+      - worker2
+      - worker3
+      - worker4
+      - worker5
+      - worker6
+      - worker7
+      - worker8
+    networks:
+      - sdr-net
+
+  worker1:
+    build:
+      context: .
+      dockerfile: ./cluster/workers/Dockerfile
+    container_name: sdr_worker1
+    networks:
+      - sdr-net
+
+  worker2:
+    build:
+      context: .
+      dockerfile: ./cluster/workers/Dockerfile
+    container_name: sdr_worker2
+    networks:
+      - sdr-net
+
+  worker3:
+    build:
+      context: .
+      dockerfile: ./cluster/workers/Dockerfile
+    container_name: sdr_worker3
+    networks:
+      - sdr-net
+
+  worker4:
+    build:
+      context: .
+      dockerfile: ./cluster/workers/Dockerfile
+    container_name: sdr_worker4
+    networks:
+      - sdr-net
+
+  worker5:
+    build:
+      context: .
+      dockerfile: ./cluster/workers/Dockerfile
+    container_name: sdr_worker5
+    networks:
+      - sdr-net
+
+  worker6:
+    build:
+      context: .
+      dockerfile: ./cluster/workers/Dockerfile
+    container_name: sdr_worker6
+    networks:
+      - sdr-net
+
+  worker7:
+    build:
+      context: .
+      dockerfile: ./cluster/workers/Dockerfile
+    container_name: sdr_worker7
+    networks:
+      - sdr-net
+
+  worker8:
+    build:
+      context: .
+      dockerfile: ./cluster/workers/Dockerfile
+    container_name: sdr_worker8
+    networks:
+      - sdr-net
+
+volumes:
+  mongo_data:
+
+networks:
+  sdr-net:
+    driver: bridge
