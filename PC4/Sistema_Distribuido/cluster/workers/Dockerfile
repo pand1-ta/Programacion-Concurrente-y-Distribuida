@@ -1,6 +1,6 @@
 # cluster/workers/Dockerfile
 
-FROM golang:1.24-alpine AS builder
+FROM golang:1.21-alpine AS builder
 WORKDIR /app
 
 # Copia todo el código del proyecto al contenedor
