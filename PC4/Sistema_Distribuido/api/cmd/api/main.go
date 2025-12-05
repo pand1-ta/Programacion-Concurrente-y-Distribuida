@@ -15,7 +15,6 @@ import (
 	"sdr/api/internal/data"
 	"sdr/api/internal/database"
 	httpApi "sdr/api/internal/http"
-	"sdr/api/internal/models"
 	"sdr/api/internal/service"
 )
 
@@ -29,8 +28,6 @@ func main() {
 	dsPath := "/app/dataset"
 
 	movies, err := data.LoadMovies(dsPath + "/movies.csv")
-	// Extraer géneros únicos
-	genres := getUniqueGenres(movies)
 	if err != nil {
 		log.Fatalf("LoadMovies error: %v", err)
 	}
@@ -51,25 +48,11 @@ func main() {
 	// MongoDB
 	mongoURI := os.Getenv("MONGO_URI")
 	if mongoURI == "" {
-		mongoURI = "mongodb://admin:admin123@sdr_mongo:27017/?authSource=admin"
+		mongoURI = "mongodb://mongodb:27017"
 	}
-
-	mongoClient, err := database.NewMongoClient(mongoURI, "sdrdb", "history")
+	mongoClient, err := database.NewMongoClient(mongoURI, "sdr", "history")
 	if err != nil {
 		log.Fatalf("Mongo connect error: %v", err)
-	}
-
-	if err := mongoClient.SeedUsersIfEmpty(userIdxToOrig); err != nil {
-		log.Fatalf("SeedUsers error: %v", err)
-	}
-
-	movieSlice := make([]models.Movie, 0, len(movies))
-	for _, mv := range movies {
-		movieSlice = append(movieSlice, mv)
-	}
-
-	if err := mongoClient.SeedMoviesIfEmpty(movieSlice); err != nil {
-		log.Fatalf("SeedMovies error: %v", err)
 	}
 
 	// Redis
@@ -97,15 +80,7 @@ func main() {
 		MovieIndexToOriginal: movieIdxToOrig,
 	}
 
-	svc := service.NewRecommendationService(
-		movies,
-		mappings,
-		matrixData.Matrix,
-		redisClient,
-		mongoClient,
-		cluster,
-		genres,
-	)
+	svc := service.NewRecommendationService(movies, mappings, matrixData.Matrix, redisClient, mongoClient, cluster)
 
 	handler := httpApi.NewHandler(svc)
 	router := mux.NewRouter()
@@ -113,9 +88,6 @@ func main() {
 	// Rutas principales
 	router.HandleFunc("/recommend/{userId}", handler.Recommend).Methods("GET")
 	router.HandleFunc("/health", handler.Health).Methods("GET")
-	router.HandleFunc("/users", handler.GetUsers).Methods("GET")
-	router.HandleFunc("/movies", handler.GetMovies).Methods("GET")
-	router.HandleFunc("/genres", handler.GetGenres).Methods("GET")
 
 	// Rutas Swagger
 	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
@@ -130,18 +102,4 @@ func main() {
 
 	log.Println("API listening on :8080")
 	log.Fatal(srv.ListenAndServe())
-}
-
-func getUniqueGenres(movies map[int]models.Movie) []string {
-	set := make(map[string]struct{})
-	for _, mv := range movies {
-		if mv.Genre != "" {
-			set[mv.Genre] = struct{}{}
-		}
-	}
-	out := make([]string, 0, len(set))
-	for g := range set {
-		out = append(out, g)
-	}
-	return out
 }

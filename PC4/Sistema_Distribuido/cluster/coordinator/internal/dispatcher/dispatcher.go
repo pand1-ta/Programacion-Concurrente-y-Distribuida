@@ -50,7 +50,7 @@ func processSimilarity(msg models.TaskMessage) (models.CoordinatorResponse, erro
 // PROCESAR RECOMENDACIÓN (distribuido)
 // -------------------------------------------
 func processRecommendation(msg models.TaskMessage) (models.CoordinatorResponse, error) {
-	log.Println("Iniciando processRecommendation...")
+	log.Println("🟡 Iniciando processRecommendation...")
 	var wg sync.WaitGroup
 	results := make(chan []float64, len(workerAddrs))
 
@@ -59,13 +59,13 @@ func processRecommendation(msg models.TaskMessage) (models.CoordinatorResponse, 
 		wg.Add(1)
 		go func(a string) {
 			defer wg.Done()
-			log.Printf("Intentando conectar con worker %s...\n", a)
+			log.Printf("➡️  Intentando conectar con worker %s...\n", a)
 			resp, err := tcpclient.SendTask(a, msg)
 			if err != nil {
-				log.Printf("Error comunicando con %s: %v\n", a, err)
+				log.Printf("❌ Error comunicando con %s: %v\n", a, err)
 				return
 			}
-			log.Printf("Respuesta recibida de %s con %d resultados\n", a, len(resp.Result))
+			log.Printf("✅ Respuesta recibida de %s con %d resultados\n", a, len(resp.Result))
 			if len(resp.Result) > 0 {
 				results <- resp.Result
 			}
@@ -74,7 +74,7 @@ func processRecommendation(msg models.TaskMessage) (models.CoordinatorResponse, 
 
 	wg.Wait()
 	close(results)
-	log.Println("Todos los goroutines completados, combinando resultados...")
+	log.Println("🟢 Todos los goroutines completados, combinando resultados...")
 
 	// Combinar resultados parciales (promedio)
 	var combined []float64
@@ -90,7 +90,7 @@ func processRecommendation(msg models.TaskMessage) (models.CoordinatorResponse, 
 	}
 
 	if count == 0 {
-		log.Println("No se recibieron resultados de ningún worker.")
+		log.Println("❌ No se recibieron resultados de ningún worker.")
 		return models.CoordinatorResponse{}, fmt.Errorf("no se recibieron resultados de los workers")
 	}
 
@@ -99,7 +99,7 @@ func processRecommendation(msg models.TaskMessage) (models.CoordinatorResponse, 
 	}
 
 	indexes := compute.SortIndexesByScore(combined)
-	log.Println("Recomendaciones combinadas, enviando respuesta a la API...")
+	log.Println("✅ Recomendaciones combinadas, enviando respuesta a la API...")
 
 	return models.CoordinatorResponse{
 		Result:  combined,

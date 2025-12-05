@@ -17,26 +17,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/genres": {
-            "get": {
-                "description": "Devuelve todos los géneros únicos encontrados en las películas",
-                "tags": [
-                    "Géneros"
-                ],
-                "summary": "Lista de géneros disponibles",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/health": {
             "get": {
                 "description": "Devuelve 'ok' si el servicio está activo",
@@ -54,55 +34,13 @@ const docTemplate = `{
                 }
             }
         },
-        "/movies": {
-            "get": {
-                "description": "Lista películas con filtro opcional por género y paginación",
-                "tags": [
-                    "Películas"
-                ],
-                "summary": "Lista películas",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Género",
-                        "name": "genre",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "default": 1,
-                        "description": "Página",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "default": 20,
-                        "description": "Límite por página",
-                        "name": "limit",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.Movie"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/recommend/{userId}": {
             "get": {
-                "description": "Retorna películas recomendadas para un usuario, con filtros opcionales",
+                "description": "Retorna una lista de películas recomendadas para el usuario especificado",
                 "tags": [
                     "Recomendaciones"
                 ],
-                "summary": "Genera recomendaciones filtradas",
+                "summary": "Genera recomendaciones para un usuario",
                 "parameters": [
                     {
                         "type": "integer",
@@ -114,14 +52,8 @@ const docTemplate = `{
                     {
                         "type": "integer",
                         "default": 10,
-                        "description": "Cantidad de recomendaciones",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Género a filtrar",
-                        "name": "genre",
+                        "description": "Número de recomendaciones",
+                        "name": "k",
                         "in": "query"
                     }
                 ],
@@ -149,51 +81,12 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "/users": {
-            "get": {
-                "description": "Devuelve la lista de usuarios con paginación",
-                "tags": [
-                    "Usuarios"
-                ],
-                "summary": "Lista usuarios",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "default": 1,
-                        "description": "Página",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "default": 20,
-                        "description": "Límite por página",
-                        "name": "limit",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
         "models.Movie": {
             "type": "object",
             "properties": {
-                "genre": {
-                    "type": "string"
-                },
                 "movieId": {
                     "type": "string"
                 },
