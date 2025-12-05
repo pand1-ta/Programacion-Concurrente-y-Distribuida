@@ -1,0 +1,54 @@
+.header-menu{
+    background-color: blueviolet;
+}
+
+.contenedor-header{
+    padding: 20px;
+}
+
+.contenedor-seccion-contenido{
+    background-color: cornflowerblue;
+    padding-top: 1rem;
+    padding-left: 2rem;
+    padding-bottom: 1rem;
+}
+
+.contenedor-seccion-filtros{
+    margin-top: 2rem;
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: rgb(140, 69, 255);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.titulo-menu{
+    font-size: 2.5rem;
+}
+
+.titulo-bienvenida {
+    font-size: 1.2rem;
+    color: rgb(255, 194, 252);
+    margin: 0;
+}
+
+.subtitulo-seccion{
+    font-size: 1.5rem;
+}
+
+.activo{
+    color: rgb(255, 187, 0);
+    font-size: 1rem;
+    font-weight: bold;
+    text-shadow:
+    1px 1px 0 #fff,
+    -1px 1px 0 #fff,
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff;
+}
+
+.no-activo{
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+}

@@ -1,0 +1,43 @@
+.contenedor-menu-metricas{
+    background-color: lemonchiffon;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.contenedor-pelicula{
+    background-color: mediumslateblue;
+    margin: 1rem;
+    border-radius: 1rem;
+}
+
+.btn-menu{
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.btn-menu:hover{
+    background-color: rgb(250, 240, 146);
+}
+
+.input{
+    background-color: white;
+}
+
+.img-pelicula{
+    max-width: 150px;
+    height: auto;
+    border-radius: 0.5rem;
+}
+
+.titulo-pelicula{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+}
+
+.generos{
+    font-size: 0.9rem;
+    color: white;
+    margin: 0;
+}

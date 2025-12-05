@@ -1,0 +1,133 @@
+basePath: /
+definitions:
+  models.Movie:
+    properties:
+      genre:
+        type: string
+      movieId:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: Equipo SDR
+  description: API para generar recomendaciones personalizadas utilizando un clúster
+    distribuido de Workers.
+  title: Sistema Distribuido de Recomendaciones
+  version: "1.0"
+paths:
+  /genres:
+    get:
+      description: Devuelve todos los géneros únicos encontrados en las películas
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Lista de géneros disponibles
+      tags:
+      - Géneros
+  /health:
+    get:
+      description: Devuelve 'ok' si el servicio está activo
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Verifica el estado del servicio
+      tags:
+      - Salud
+  /movies:
+    get:
+      description: Lista películas con filtro opcional por género y paginación
+      parameters:
+      - description: Género
+        in: query
+        name: genre
+        type: string
+      - default: 1
+        description: Página
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Límite por página
+        in: query
+        name: limit
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Movie'
+            type: array
+      summary: Lista películas
+      tags:
+      - Películas
+  /recommend/{userId}:
+    get:
+      description: Retorna películas recomendadas para un usuario, con filtros opcionales
+      parameters:
+      - description: ID del usuario
+        in: path
+        name: userId
+        required: true
+        type: integer
+      - default: 10
+        description: Cantidad de recomendaciones
+        in: query
+        name: limit
+        type: integer
+      - description: Género a filtrar
+        in: query
+        name: genre
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Movie'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Usuario no encontrado
+          schema:
+            type: string
+      summary: Genera recomendaciones filtradas
+      tags:
+      - Recomendaciones
+  /users:
+    get:
+      description: Devuelve la lista de usuarios con paginación
+      parameters:
+      - default: 1
+        description: Página
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Límite por página
+        in: query
+        name: limit
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Lista usuarios
+      tags:
+      - Usuarios
+swagger: "2.0"

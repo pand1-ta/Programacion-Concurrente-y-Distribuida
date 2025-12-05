@@ -1,0 +1,82 @@
+asyncapi: '2.6.0'
+info:
+  title: Sistema Distribuido de Recomendaciones - WebSocket
+  version: '1.0.0'
+  description: |
+    Especificación AsyncAPI para el canal WebSocket que entrega recomendaciones.
+    Conectar a `ws://<host>/ws/recommend/{userId}?limit={limit}&genre={genre}`.
+servers:
+  production:
+    url: localhost:8080
+    protocol: ws
+channels:
+  /ws/recommend/{userId}:
+    description: WebSocket para solicitar recomendaciones para un usuario.
+    parameters:
+      userId:
+        description: ID del usuario
+        schema:
+          type: integer
+    subscribe:
+      summary: Mensajes enviados por el servidor (recomendaciones junto con métricas)
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            movies:
+              type: array
+              items:
+                $ref: '#/components/schemas/Movie'
+            metrics:
+              $ref: '#/components/schemas/Metrics'
+        examples:
+          - movies: [
+              { movieId: "1", title: "The Shawshank Redemption", genre: "Drama" },
+              { movieId: "2", title: "The Godfather", genre: "Crime" }
+            ]
+            metrics:
+              elapsed_ms: 123
+              num_cpu: 4
+              num_goroutine: 12
+              mem_start_alloc: 123456
+              mem_end_alloc: 234567
+              mem_total_alloc: 345678
+              mem_sys: 456789
+components: {}
+
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        movieId:
+          type: string
+        title:
+          type: string
+        genre:
+          type: string
+    Metrics:
+      type: object
+      properties:
+        elapsed_ms:
+          type: integer
+          description: Tiempo en milisegundos que tomó generar la recomendación
+        num_cpu:
+          type: integer
+          description: Número de CPUs disponibles (runtime.NumCPU)
+        num_goroutine:
+          type: integer
+          description: Número de goroutines en el runtime
+        mem_start_alloc:
+          type: integer
+          description: Bytes alloc al inicio (MemStats.Alloc)
+        mem_end_alloc:
+          type: integer
+          description: Bytes alloc al final (MemStats.Alloc)
+        mem_total_alloc:
+          type: integer
+          description: MemStats.TotalAlloc
+        mem_sys:
+          type: integer
+          description: MemStats.Sys

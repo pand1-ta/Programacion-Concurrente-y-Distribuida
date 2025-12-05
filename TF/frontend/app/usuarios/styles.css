@@ -1,0 +1,58 @@
+.contenedor-pagina-inicio{
+    background-color: #380254;
+    min-height: 100vh;
+    padding-top: 200px;
+    padding-bottom: 50px;
+}
+
+.contenedor-icono-user{
+    max-width: 200px;
+    height: auto;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.contenedor-usuario{
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.contenedor-usuario:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.titulo-bienvenida {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #e99aff;
+    margin-bottom: 20px;
+}
+
+.titulo-elegir{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 40px;
+}
+
+.texto-nombre{
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.texto-email{
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}

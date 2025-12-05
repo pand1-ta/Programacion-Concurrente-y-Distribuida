@@ -1,0 +1,253 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API para generar recomendaciones personalizadas utilizando un clúster distribuido de Workers.",
+        "title": "Sistema Distribuido de Recomendaciones",
+        "contact": {
+            "name": "Equipo SDR"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/genres": {
+            "get": {
+                "description": "Devuelve todos los géneros únicos encontrados en las películas",
+                "tags": [
+                    "Géneros"
+                ],
+                "summary": "Lista de géneros disponibles",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "description": "Devuelve 'ok' si el servicio está activo",
+                "tags": [
+                    "Salud"
+                ],
+                "summary": "Verifica el estado del servicio",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/movies": {
+            "get": {
+                "description": "Lista películas con filtro opcional por género y paginación",
+                "tags": [
+                    "Películas"
+                ],
+                "summary": "Lista películas",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Género",
+                        "name": "genre",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Página",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "Límite por página",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Movie"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recommend/{userId}": {
+            "get": {
+                "description": "Retorna películas recomendadas para un usuario, con filtros opcionales",
+                "tags": [
+                    "Recomendaciones"
+                ],
+                "summary": "Genera recomendaciones filtradas",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID del usuario",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Cantidad de recomendaciones",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Género a filtrar",
+                        "name": "genre",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "movies": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/definitions/models.Movie" }
+                                },
+                                "metrics": { "$ref": "#/definitions/models.Metrics" }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/ws/recommend/{userId}": {
+            "get": {
+                "description": "Endpoint informativo: realiza un upgrade a WebSocket. Conectarse con ws://<host>/ws/recommend/{userId}?limit=..&genre=...\nVer especificación completa en 'asyncapi.yaml' (api/docs/asyncapi.yaml).\nSalida: JSON con {movies: [...], metrics: {...}} o {\"error\": \"...\"}.",
+                "tags": [
+                    "Recomendaciones"
+                ],
+                "summary": "WebSocket: recomendaciones para un usuario (informativo)",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID del usuario",
+                        "name": "userId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Cantidad de recomendaciones",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Género a filtrar",
+                        "name": "genre",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "101": {
+                        "description": "Switching Protocols (upgrade a WebSocket) - documentativo"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "Devuelve la lista de usuarios con paginación",
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Lista usuarios",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Página",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "Límite por página",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Movie": {
+            "type": "object",
+            "properties": {
+                "genre": {
+                    "type": "string"
+                },
+                "movieId": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        }
+        ,
+        "models.Metrics": {
+            "type": "object",
+            "properties": {
+                "elapsed_ms": { "type": "integer", "description": "Tiempo en milisegundos que tomó generar la recomendación" },
+                "num_cpu": { "type": "integer" },
+                "num_goroutine": { "type": "integer" },
+                "mem_start_alloc": { "type": "integer" },
+                "mem_end_alloc": { "type": "integer" },
+                "mem_total_alloc": { "type": "integer" },
+                "mem_sys": { "type": "integer" }
+            }
+        }
+    }
+}
