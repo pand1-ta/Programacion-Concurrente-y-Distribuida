@@ -13,7 +13,7 @@
 
 ---
 
-## 🧠 Contexto del Trabajo
+# 🧠 Descripción General del Proyecto
 
 Este proyecto implementa un **sistema de recomendación de películas distribuido**, basado en *filtrado colaborativo* y desarrollado en *Go (Golang)*.
 El sistema procesa reseñas de usuarios de manera *concurrente*, utilizando *goroutines y channels* para lograr **menores tiempos de respuesta y alta escalabilidad**.

@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 
 	"sdr/api/internal/coordinator"
@@ -19,6 +20,8 @@ type RecommendationService struct {
 	Mongo    *database.MongoClient
 	Cluster  *coordinator.CoordinatorClient
 	CacheTTL time.Duration
+
+	Genres []string // <- géneros precargados
 }
 
 func NewRecommendationService(
@@ -28,6 +31,7 @@ func NewRecommendationService(
 	redis *database.RedisClient,
 	mongo *database.MongoClient,
 	cluster *coordinator.CoordinatorClient,
+	genres []string,
 ) *RecommendationService {
 	return &RecommendationService{
 		Movies:   movies,
@@ -37,63 +41,95 @@ func NewRecommendationService(
 		Mongo:    mongo,
 		Cluster:  cluster,
 		CacheTTL: time.Hour,
+		Genres:   genres,
 	}
 }
 
-func (s *RecommendationService) Recommend(userIdStr string, k int) ([]models.Movie, error) {
-	// map userIdStr -> index
+// ---------------------------------------------------------
+//    Nueva función Recommend con filtros opcionales
+// ---------------------------------------------------------
+
+func (s *RecommendationService) Recommend(userIdStr string, limit int, genre string) ([]models.Movie, error) {
+
+	// 1. Map userIdStr → índice interno
 	idx, ok := s.Mappings.UserOriginalToIndex[userIdStr]
 	if !ok {
 		return nil, fmt.Errorf("user not found")
 	}
 
-	cacheKey := "rec:" + userIdStr
+	// Normalizar género para evitar problemas de comparación
+	genre = strings.TrimSpace(strings.ToLower(genre))
+
+	// 2. Cache key mejorado: incluye filtros
+	cacheKey := fmt.Sprintf("rec:%s:%s:%d", userIdStr, genre, limit)
+
 	var cached []models.Movie
 	found, _ := s.Redis.GetCached(cacheKey, &cached)
 	if found {
 		return cached, nil
 	}
 
-	// ask coordinator for top similar users OR to compute something
-	movieIdxs, err := s.Cluster.RequestRecommendations(idx, s.Matrix, k)
+	// 3. Pedir a los workers las recomendaciones base
+	movieIdxs, err := s.Cluster.RequestRecommendations(idx, s.Matrix, limit)
 	if err != nil {
 		return nil, err
 	}
 
-	// movieIdxs are ordered candidate movie indices (index in matrix)
-	// take top k (or top N required)
-	// We'll map to MovieIDs and return titles
-	var out []models.Movie
-	for i, mi := range movieIdxs {
-		if i >= k {
-			break
-		}
+	var results []models.Movie
+
+	// 4. Convertir índices → Movies reales con filtro opcional
+	for _, mi := range movieIdxs {
+
 		movieIDStr := s.Mappings.MovieIndexToOriginal[mi]
 		movieID, err := strconv.Atoi(movieIDStr)
 		if err != nil {
-			// fallback: produce placeholder when movieID is invalid
-			out = append(out, models.Movie{MovieID: movieIDStr, Title: "Unknown"})
 			continue
 		}
+
 		mv, ok := s.Movies[movieID]
 		if !ok {
-			// fallback: produce placeholder
-			out = append(out, models.Movie{MovieID: fmt.Sprintf("%d", movieID), Title: "Unknown"})
-		} else {
-			out = append(out, mv)
+			continue
+		}
+
+		// Aplicar filtro de género si corresponde
+		if genre != "" {
+			if !strings.Contains(strings.ToLower(mv.Genre), genre) {
+				continue
+			}
+		}
+
+		results = append(results, mv)
+
+		if len(results) >= limit {
+			break
 		}
 	}
 
-	// cache
-	_ = s.Redis.SetCached(cacheKey, out, s.CacheTTL)
+	// 5. Cache final
+	_ = s.Redis.SetCached(cacheKey, results, s.CacheTTL)
 
-	// persist history
+	// 6. Guardar historial en Mongo
 	hist := map[string]interface{}{
 		"userId": userIdStr,
 		"date":   time.Now(),
-		"movies": out,
+		"genre":  genre,
+		"limit":  limit,
+		"movies": results,
 	}
 	_ = s.Mongo.SaveRecommendation(hist)
 
-	return out, nil
+	return results, nil
+}
+
+func (s *RecommendationService) GetUsers(page, limit int) ([]string, error) {
+	return s.Mongo.GetUsersPaginated(page, limit)
+}
+
+func (s *RecommendationService) GetMovies(genre string, page, limit int) ([]models.Movie, error) {
+	genre = strings.TrimSpace(strings.ToLower(genre))
+	return s.Mongo.GetMoviesPaginated(genre, page, limit)
+}
+
+func (s *RecommendationService) GetGenres() []string {
+	return s.Genres
 }

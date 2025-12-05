@@ -4,9 +4,9 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
-	"strconv"
-
 	"sdr/api/internal/models"
+	"strconv"
+	"strings"
 )
 
 type MatrixData struct {
@@ -21,23 +21,37 @@ func LoadMovies(path string) (map[int]models.Movie, error) {
 		return nil, err
 	}
 	defer f.Close()
+
 	r := csv.NewReader(f)
-	// header
-	if _, err := r.Read(); err != nil {
+
+	// Leer header: movieId,title,genres
+	_, err = r.Read()
+	if err != nil {
 		return nil, fmt.Errorf("movies csv header read: %w", err)
 	}
+
 	movies := map[int]models.Movie{}
+
 	for {
 		row, err := r.Read()
 		if err != nil {
 			break
 		}
+
 		id, _ := strconv.Atoi(row[0])
+		title := row[1]
+		genresRaw := row[2] // Adventure|Animation|Children...
+
+		// Normalizar: minúsculas
+		genres := strings.ToLower(genresRaw)
+
 		movies[id] = models.Movie{
 			MovieID: row[0],
-			Title:   row[1],
+			Title:   title,
+			Genre:   genres,
 		}
 	}
+
 	return movies, nil
 }
 

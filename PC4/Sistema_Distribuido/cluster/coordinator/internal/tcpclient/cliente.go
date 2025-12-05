@@ -3,6 +3,7 @@ package tcpclient
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net"
 	"sdr/cluster/shared/models"
 	"time"
@@ -23,19 +24,18 @@ func SendTask(addr string, task models.TaskMessage) (models.CoordinatorResponse,
 		return models.CoordinatorResponse{}, fmt.Errorf("error al enviar datos al worker %s: %v", addr, err)
 	}
 
-	// cerrar la escritura para que el worker termine de leer
+	// Cerrar escritura para indicar fin de mensaje
 	conn.(*net.TCPConn).CloseWrite()
 
-	// Leer respuesta
-	buf := make([]byte, 65536)
-	n, err := conn.Read(buf)
-
+	// Leer toda la respuesta completa (evita "unexpected end of JSON input")
+	dataResp, err := io.ReadAll(conn)
 	if err != nil {
 		return models.CoordinatorResponse{}, fmt.Errorf("error al leer respuesta del worker %s: %v", addr, err)
 	}
 
+	// Deserializar respuesta JSON
 	var resp models.CoordinatorResponse
-	if err := json.Unmarshal(buf[:n], &resp); err != nil {
+	if err := json.Unmarshal(dataResp, &resp); err != nil {
 		return models.CoordinatorResponse{}, fmt.Errorf("error al parsear respuesta del worker %s: %v", addr, err)
 	}
 
